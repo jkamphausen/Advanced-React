@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function useForm(initial = {}) {
   // create a state object four our inputs
   const [inputs, setInputs] = useState(initial);
+  // watching inputs and filling it with the incoming inputs would cause an infinite loop, thus we create an representative value of the the state:
+  const initialValues = Object.values(initial).join('');
+
+  useEffect(() => {
+    // this function runs when tings we are watching change
+    setInputs(initial);
+  }, [initialValues]);
 
   // {
   //   name: 'wes',
